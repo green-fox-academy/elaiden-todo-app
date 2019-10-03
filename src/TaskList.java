@@ -10,7 +10,21 @@ public class TaskList {
   private ArrayList<String> tasks;
 
   public TaskList() {
-    this.tasks = new ArrayList<>();
+    tasks = new ArrayList<>();
+  }
+
+  public int size() {
+    return tasks.size();
+  }
+
+  public void remove(int numberOfTask) {
+    tasks.remove(numberOfTask - 1);
+    try {
+      Path taskFilePath = Paths.get("C:\\Users\\Gabby\\greenfox\\elaiden-todo-app\\src\\tasks.txt");
+      Files.write(taskFilePath, tasks);
+    } catch (IOException e) {
+      System.out.println("Can't write the file.");
+    }
   }
 
   public void listTasks() {
@@ -30,7 +44,7 @@ public class TaskList {
   }
 
   public void add(String task) {
-    this.tasks.add(task);
+    tasks.add(task);
     try {
       Path taskFilePath = Paths.get("C:\\Users\\Gabby\\greenfox\\elaiden-todo-app\\src\\tasks.txt");
       Files.write(taskFilePath, tasks);
