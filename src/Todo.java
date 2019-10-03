@@ -20,33 +20,39 @@ public class Todo {
       System.out.println("Can't find tasks.txt");
     }
 
-    String stringNumber;
     if (args.length == 0) {
-      System.out.println("\nCommand Line Todo application");
-      System.out.println("=============================\n");
-      System.out.println("Command line arguments:");
-      System.out.println("    -l   Lists all the tasks");
-      System.out.println("    -a   Adds a new task");
-      System.out.println("    -r   Removes an task");
-      System.out.println("    -c   Completes an task");
-    } else if (args[0].equals("-l")) {
-      System.out.println();
-      todos.listTasks();
-    } else if (args[0].equals("-a") && args.length == 1) {
-      System.out.println("\nUnable to add: no task provided");
-    } else if (args[0].equals("-a") && !args[1].isEmpty()) {
-      todos.add(args[1]);
-    } else if (args[0].equals("-r") && args.length == 1) {
-      System.out.println("\nUnable to remove: no index provided");
-    } else if (args[0].equals("-r") && !args[1].isEmpty()) {
-      try {
-        if ((Integer.parseInt(args[1]) > todos.size()) || (Integer.parseInt(args[1]) <= 0)) {
-          System.out.println("\nUnable to remove: index is out of bound");
-        } else {
-          todos.remove(Integer.parseInt(args[1]));
-        }
-      } catch (NumberFormatException n) {
-        System.out.println("\nUnable to remove: index is not a number");
+      todos.info();
+    } else {
+      switch (args[0]) {
+        case "-l":
+          System.out.println();
+          todos.listTasks();
+          break;
+        case "-a":
+          if (args.length == 1) {
+            System.out.println("\nUnable to add: no task provided");
+          } else {
+            todos.add(args[1]);
+          }
+          break;
+        case "-r":
+          if (args.length == 1) {
+            System.out.println("\nUnable to remove: no index provided");
+          } else {
+            try {
+              if ((Integer.parseInt(args[1]) > todos.size()) || (Integer.parseInt(args[1]) <= 0)) {
+                System.out.println("\nUnable to remove: index is out of bound");
+              } else {
+                todos.remove(Integer.parseInt(args[1]));
+              }
+            } catch (NumberFormatException n) {
+              System.out.println("\nUnable to remove: index is not a number");
+            }
+          }
+          break;
+        default:
+          System.out.println("\nUnsupported argument");
+          todos.info();
       }
     }
   }
